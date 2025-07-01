@@ -46,3 +46,31 @@ const typed = new Typed('.multiple-text',  {
       slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   }, 2000);
+
+  const form = document.getElementById("contact-form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // prevent default form submit
+
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Message sent successfully!");
+          form.reset(); // ✅ clear the form fields
+        } else {
+          alert("Something went wrong. Please try again.");
+        }
+      })
+      .catch((error) => {
+        alert("There was a problem sending the message.");
+        console.error(error);
+      });
+  });
